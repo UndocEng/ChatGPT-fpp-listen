@@ -64,9 +64,9 @@ else {
 $seq = isset($src["current_sequence"]) ? strval($src["current_sequence"]) : "";
 $base = basename_noext($seq);
 
-$sec_played = 0.0;
-if (isset($src["seconds_played"])) $sec_played = floatval($src["seconds_played"]);
-$pos_ms = intval($sec_played * 1000.0);
+// Use milliseconds_elapsed for frame-accurate position (seconds_played is whole-seconds only)
+$pos_ms = isset($src["milliseconds_elapsed"]) ? intval($src["milliseconds_elapsed"]) : 0;
+$sec_played = $pos_ms / 1000.0;
 
 
 // Check for audio file - prefer MP3, fall back to M4A, then other formats
